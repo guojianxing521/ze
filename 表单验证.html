@@ -1,0 +1,136 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        #box {
+            width: 380px;
+            height: 250px;
+            background-color: #ccc;
+            padding: 30px;
+            margin: 50px auto;
+        }
+
+        span {
+            font-size: 12px;
+        }
+        #strong {
+            margin-top: 5px;
+            height: 16px;
+        }
+    </style>
+  
+    
+</head>
+
+<body>
+    <div id="box">
+        QQ号：<input type="text" id="txtQQ"><span></span><br><br> 邮&nbsp;&nbsp;箱：
+        <input type="text" id="txtEMail"><span></span><br><br> 手&nbsp;&nbsp;机：
+        <input type="text" id="txtPhone"><span></span><br><br> 生&nbsp;&nbsp;日：
+        <input type="text" id="txtBirthday"><span></span><br><br> 姓&nbsp;&nbsp;名：
+        <input type="text" id="txtName"><span></span><br><br>密码强度:
+        <input type="password" id="txtPassword"><span></span><div id="strong"></div>
+    </div>
+  <script>
+  	  function $(id){
+  	  	return document.getElementById(id);
+  	  }
+  	  
+  	  var qq = $('txtQQ');
+  	  var email = $('txtEMail');
+  	  var photo = $('txtPhone');
+  	  var birth = $('txtBirthday');
+  	  var txtname = $('txtName');
+  	  var psword =$('txtPassword');
+  	  
+//	  qq.onblur = function(){
+//	  	//获取当前的input内容
+//	  	var str = this.value;
+////	  	console.log(str);
+//	  	var re  = /^[1-9]\d{4,10}$/;//第一个数字不能为0，长度控制在5-11;
+//	  	var sp = this.nextElementSibling;
+////	  	console.log(sp);
+//	  	if(re.test(str)){
+//	  		sp.innerText = '恭喜您输入正确';
+//	  		sp.style.color ='deepskyblue';
+//	  	}else{
+//	  		sp.innerText=('您输入不符合规则');
+//	  		sp.style.color ='red';
+//	  	}
+//	  	
+//	  	
+//	  }
+//创建一个json
+      
+      var arr =[
+      	{
+      		name:qq,
+      		re:/^[1-9]\d{4,10}$/,
+      		si:'输入长度为5-11'
+      	},
+      	{
+      		//145141394@qq.com.cn.com
+      		name:email,
+      		re: /^\w+@\w+(\.\w+){1,2}$/,///^\w+@\w+\.\w+(\.\w+)?$/
+      		//  @前面为数字，字母，下划线组成，重复匹配，@后面第一部分也是，之后是\.\w重复至少一次最多两次
+      		si:'输入不符合规则'
+      	},
+      	{
+      		name:photo,
+      		re:/^(13[0-9]|15[0-9]|18[0-9])\d{8}$/,// /^((13[0-9])|(15[^4,\D])|(18[0-9]))\d{8}$/,
+      		//电话号码要满足11位，前两位只能是13或15或18，第三位比较特殊,15开头的第三位数字除去4并且除去非数字
+      		si:'输入不符合规则,11位,前两位只能是13或15或18'
+      	},
+      	{
+      		name:birth,//1994-3-4
+      		re:/^d{4}-\d{1,2}-\d{1,2}$/,//^\d{4}-\d{1,2}-\d{1,2}$/,
+      		si:'输入不符合规则,正确格式xxxx-xx-xx或xxxx-x-x'
+      	},
+      	{
+      		name:txtname,//输入2到4个汉字
+      		re: /^[\u4e00-\u9fa5]{2,4}$/,///^[\u4e00-\u9fa5]{2,4}$/
+      		si: '输入不符合规则,输入2到4个汉字'
+      	},
+      	{
+      		name:psword,
+      		re:/^.{8,12}$/,//输入密码长度为8-12位
+      		si:'输入密码长度为8-12位'
+      	}
+      ]
+   
+//    提取公共部分，传参，定义一个函数
+   function yanzheng(element,re,si){
+   	
+   	//元素失去焦点时
+   	 element.onblur = function(){
+  	  	//获取当前的input内容
+  	  	var str = this.value;
+        //获取当前的span标签
+  	  	var sp = this.nextElementSibling;
+        //判断是否符合正则规则
+  	  	if(re.test(str)){
+	  		sp.innerHTML = '恭喜您输入正确';
+  	  		sp.style.color ='deepskyblue';
+  	  	}else{
+	  		sp.innerText= si;
+  	  		sp.style.color ='red';
+  	  	}
+  	  	
+  	  	
+  	  }
+   }
+   //循环数组，调用函数
+   for(var i=0;i<arr.length;i++){
+   	yanzheng(arr[i].name,arr[i].re,arr[i].si);
+   }
+   
+   
+  </script>
+</body>
+
+</html>

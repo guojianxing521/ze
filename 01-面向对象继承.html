@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<script>
+				function Itouch(color,price,size){
+				
+				this.color = color;
+				this.price = price;
+				this.size = size;
+				
+			}
+				Itouch.prototype.playGame = function(){
+				console.log("可以打游戏");
+			}
+			
+			Itouch.prototype.listenToMusic = function(){
+				console.log("可以听音乐");
+			}
+		
+			//继承构造函数的属性
+			function Iphoto(color,price,size){
+				Itouch.apply(this,[color,price,size]);
+			}
+			//遍历父级构造函数的原型属性，不包括默认属性，只是自己添加的属性
+			for(var attr in Itouch.prototype){
+				Iphoto.prototype[attr] = Itouch.prototype[attr];
+			}
+			//给继承者原型添加自己的方法属性
+			Iphoto.prototype.callPhoto =function(){
+				console.log('可以打电话');
+			}
+				var itouch1 = new Itouch();
+				var iphoto1 = new Iphoto('red',33,1.4);
+//				itouch1.callPhoto();//
+              console.log(iphoto1)
+				iphoto1.callPhoto();
+		</script>
+	</body>
+</html>
